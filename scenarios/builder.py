@@ -6,7 +6,6 @@ from typing import List, Optional
 
 
 class Scenario:
-    """Product built by builders; also supports Prototype cloning."""
 
     def __init__(self, name: str) -> None:
         self.name = name

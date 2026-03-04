@@ -1,11 +1,3 @@
-"""
-Console demo for Smart Home design patterns:
-- Factory Method: device creators
-- Abstract Factory: brand-specific factories
-- Singleton: HomeManager
-- Builder: Scenario construction via director
-- Prototype: clone devices and scenarios
-"""
 from typing import List, Optional
 from factories.smart_home_factory import SmartHomeFactory, XiaomiFactory, PhilipsFactory, SamsungFactory
 from devices.device import Device
