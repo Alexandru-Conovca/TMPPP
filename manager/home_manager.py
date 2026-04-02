@@ -27,6 +27,22 @@ class HomeManager:
     def add_scenario(self, scenario: Scenario) -> None:
         self.scenarios.append(scenario)
 
+    def get_all_devices(self) -> List[Device]:
+        """Return all registered devices."""
+        return list(self.devices)
+
+    def get_all_scenarios(self) -> List[Scenario]:
+        """Return all registered scenarios."""
+        return list(self.scenarios)
+
+    def run_scenario(self, name_keyword: str) -> str:
+        """Return scenario summary by keyword for GUI/facade usage."""
+        lowered = name_keyword.lower()
+        for scenario in self.scenarios:
+            if lowered in scenario.name.lower():
+                return scenario.summary()
+        return f"Scenario '{name_keyword}' not found"
+
     def describe(self) -> str:
         lines = ["Devices:"]
         if not self.devices:
