@@ -3,6 +3,8 @@ from typing import List
 from devices.device import Alarm, Camera, Device
 from manager.home_manager import HomeManager
 from scenarios.builder import Scenario
+from behavioral.command.commands import TurnOffDeviceCommand, TurnOnDeviceCommand
+from behavioral.command.invoker import RemoteControl
 from structural.composite.composite import DeviceGroup, SecurityGroup
 from structural.decorator.decorator import EnergySavingDecorator, SmartLightDecorator
 from structural.proxy.proxy import LoggingProxy, SecurityProxy
@@ -20,13 +22,26 @@ class SmartHomeFacade:
         return group
 
     def turn_all_on(self) -> str:
-        return self._all_devices_group().operate()
+        devices = self._manager.get_all_devices()
+        if not devices:
+            return "No devices available"
+
+        invoker = RemoteControl()
+        results: List[str] = []
+        for device in devices:
+            results.append(invoker.press(TurnOnDeviceCommand(device)))
+        return "All devices turned on via Command: " + " | ".join(results)
 
     def turn_all_off(self) -> str:
         devices = self._manager.get_all_devices()
         if not devices:
             return "No devices available"
-        return "All devices turned off (simulated): " + " | ".join([f"{device.name}: OFF" for device in devices])
+
+        invoker = RemoteControl()
+        results: List[str] = []
+        for device in devices:
+            results.append(invoker.press(TurnOffDeviceCommand(device)))
+        return "All devices turned off via Command: " + " | ".join(results)
 
     def activate_security_mode(self) -> str:
         security_group = SecurityGroup()

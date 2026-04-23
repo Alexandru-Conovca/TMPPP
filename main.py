@@ -3,6 +3,7 @@ from factories.smart_home_factory import SmartHomeFactory, XiaomiFactory, Philip
 from devices.device import Device
 from manager.home_manager import HomeManager
 from scenarios.builder import StandardScenarioBuilder, ScenarioDirector
+from behavioral.demo import run_behavioral_demo
 
 
 def choose_brand() -> SmartHomeFactory:
@@ -88,6 +89,7 @@ def main() -> None:
         print("4. Создать сценарий")
         print("5. Клонировать устройство или сценарий")
         print("6. Показать состояние дома")
+        print("7. Демонстрация поведенческих паттернов")
         print("0. Выход")
         choice = input("Ваш выбор: ")
 
@@ -129,6 +131,8 @@ def main() -> None:
                 print("Неизвестный тип клонирования")
         elif choice == "6":
             print(manager.describe())
+        elif choice == "7":
+            print(run_behavioral_demo())
         elif choice == "0":
             print("Выход")
             break
